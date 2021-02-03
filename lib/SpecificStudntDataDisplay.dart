@@ -417,7 +417,7 @@ class _specificStudentDataDisplayState extends State<specificStudentDataDisplay>
                 child: FlatButton(
                   child: Text(cheak?'Count CGPA':totalResult.toStringAsFixed(2),style: TextStyle(color: Colors.white,fontSize:15,fontWeight:FontWeight.bold),),
                   onPressed: (){
-                    var totalCGPA=1.0;
+                    var totalCGPA=0.0;
                     if(data.firstSem==''){
                       totalCGPA=totalCGPA+0.0;
                     }

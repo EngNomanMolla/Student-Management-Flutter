@@ -101,6 +101,14 @@ class _CreatePageState extends State<CreatePage> {
   }
 
  Future<void> sendDataToFirebase()async{
+      List<String> splitList=Roll.split(' ');
+      List<String> indexList=[];
+      for(int i=0;i<splitList.length;i++){
+        for(int j=0;j<=splitList[i].length+i;j++){
+          indexList.add(splitList[i].substring(0,j).toLowerCase());
+        }
+      }
+
     setState(() {
       cheak=false;
     });
@@ -131,6 +139,7 @@ class _CreatePageState extends State<CreatePage> {
        'SevenSem':seventhSemester,
        'EightSem':eightSemester,
        'UniqueId':documentId,
+       'IndexList':indexList,
      }).then((value){
        setState(() {
          cheak=true;
@@ -456,7 +465,7 @@ class _CreatePageState extends State<CreatePage> {
                                               }
                                             },
                                             onSaved: (value){
-                                              Roll=value;
+                                              Roll=value.toString();
                                             },
                                           ),
                                         ),

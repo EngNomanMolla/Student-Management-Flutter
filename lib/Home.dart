@@ -20,6 +20,7 @@ class _HomeState extends State<Home> {
   var semester = '1st';
   var cheak = false;
   var number;
+  var searchString;
   var colorlist = [
     Colors.lightBlueAccent,
     Colors.black26,
@@ -136,7 +137,13 @@ class _HomeState extends State<Home> {
                       padding: EdgeInsets.all(6),
                       child: TextField(
                         decoration:
-                            InputDecoration(hintText: 'Search with name...'),
+                            InputDecoration(hintText: 'Search with roll...'),
+                        keyboardType: TextInputType.number,
+                        onChanged: (value){
+                          setState(() {
+                            searchString=value;
+                          });
+                        },
                       ),
                     ),
                   ),
@@ -159,10 +166,10 @@ class _HomeState extends State<Home> {
             ),
           ),
           Expanded(
-            child: StreamBuilder(
-                stream: FirebaseFirestore.instance
+            child: StreamBuilder<QuerySnapshot>(
+                stream:(searchString==null||searchString.toString().trim()=='')? FirebaseFirestore.instance
                     .collection(currentUid.toString() + semester)
-                    .snapshots(),
+                    .snapshots():FirebaseFirestore.instance.collection(currentUid.toString()+semester).where('IndexList',arrayContains: searchString).snapshots(),
                 builder: (context, snapshot) {
                   if (!snapshot.hasData) {
                     return Center(child: CircularProgressIndicator());
